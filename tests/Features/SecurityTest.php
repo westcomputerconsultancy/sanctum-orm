@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Tests\Kilip\SanctumORM\Features;
 
+use Kilip\SanctumORM\Manager\TokenManagerInterface;
 use Tests\Kilip\SanctumORM\TestCase;
 
 class SecurityTest extends TestCase
@@ -37,5 +38,22 @@ class SecurityTest extends TestCase
         $response->assertOk();
         $this->assertNotCount(0, $json);
         $this->assertSame($user->toArray(), $json);
+    }
+
+    public function testLoginWithExpiredToken()
+    {
+        /** @var \Kilip\SanctumORM\Manager\TokenManagerInterface $tokenManager */
+        $user         = $this->createUser();
+        $tokenManager = app()->get(TokenManagerInterface::class);
+
+        $token            = $tokenManager->createToken($user, 'phpunit');
+        $currentUserToken = $token->accessToken;
+        $currentUserToken->setCreatedAt(new \DateTime('-365 days'));
+        $tokenManager->storeToken($currentUserToken);
+
+        $response = $this->get('/api/user', [
+            'Authorization' => 'Bearer '.$token->plainTextToken,
+        ]);
+        $response->assertStatus(404);
     }
 }

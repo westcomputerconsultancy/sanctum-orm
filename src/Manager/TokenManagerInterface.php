@@ -65,4 +65,20 @@ interface TokenManagerInterface
      * @return SanctumUserInterface|object|null
      */
     public function findUserByUsernameOrEmail(string $username);
+
+    /**
+     * @param SanctumUserInterface $user
+     * @param bool                 $andFlush
+     *
+     * @return void
+     */
+    public function storeUser(SanctumUserInterface $user, $andFlush=true);
+
+    /**
+     * @param TokenModelInterface $token
+     * @param bool                $andFlush
+     *
+     * @return void
+     */
+    public function storeToken(TokenModelInterface $token, $andFlush = true);
 }

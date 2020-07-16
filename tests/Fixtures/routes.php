@@ -41,3 +41,8 @@ Route::post('/api/login', function (TokenManagerInterface $tokenManager, Request
 
     return response()->json($token);
 });
+
+Route::name('login')
+    ->get('/login', function () {
+        return response()->json(['content' => 'must login']);
+    });

@@ -28,8 +28,9 @@ class TestTokens extends Tokens implements Jsonable, Arrayable
     public function toArray()
     {
         return [
-            'name'  => $this->getName(),
-            'token' => $this->getToken(),
+            'name'      => $this->getName(),
+            'token'     => $this->getToken(),
+            'abilities' => $this->getAbilities(),
         ];
     }
 

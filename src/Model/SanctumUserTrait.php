@@ -31,10 +31,13 @@ trait SanctumUserTrait
     protected $tokens;
 
     /**
-     * @param TokenModelInterface $token
+     * {@inheritdoc}
      */
     public function addToken(TokenModelInterface $token)
     {
+        $token->setOwner($this);
+
+        return $this;
     }
 
     public function getTokens()
@@ -44,17 +47,16 @@ trait SanctumUserTrait
 
     public function tokenCan(string $ability)
     {
-    }
-
-    public function createToken(string $name, array $abilities=['*'])
-    {
+        return $this->accessToken ? $this->accessToken->can($ability) : false;
     }
 
     public function currentAccessToken()
     {
+        return $this->accessToken;
     }
 
     public function withAccessToken($accessToken)
     {
+        $this->accessToken = $accessToken;
     }
 }

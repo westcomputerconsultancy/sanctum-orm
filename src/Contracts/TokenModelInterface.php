@@ -32,6 +32,18 @@ interface TokenModelInterface extends HasAbilities
     /**
      * @return \DateTime
      */
+    public function getLastUsedAt();
+
+    /**
+     * @param \DateTime $date
+     *
+     * @return static
+     */
+    public function setCreatedAt(\DateTime $date);
+
+    /**
+     * @return \DateTime
+     */
     public function getCreatedAt();
 
     /**
@@ -40,7 +52,7 @@ interface TokenModelInterface extends HasAbilities
     public function getOwner();
 
     /**
-     * @param SanctumUserInterface $user
+     * @param SanctumUserInterface|object $user
      *
      * @return static
      */

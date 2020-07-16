@@ -55,7 +55,7 @@ class NewAccessToken implements Arrayable, Jsonable
     public function toArray()
     {
         return [
-            'name'           => $this->accessToken->getName(),
+            'accessToken'    => $this->accessToken,
             'plainTextToken' => $this->plainTextToken,
         ];
     }

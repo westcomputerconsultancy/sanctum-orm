@@ -89,9 +89,11 @@ class TokenManager implements TokenManagerInterface
         $token          = new $this->tokenModel();
         $token->setName($name)
             ->setToken(hash('sha256', $plainTextToken))
-            ->setAbilities($abilities)
-            ->setOwner($user);
+            ->setAbilities($abilities);
+        $user->addToken($token);
+
         $this->storeToken($token);
+        $this->storeUser($user);
 
         return new NewAccessToken($token, $token->getId().'|'.$plainTextToken);
     }

@@ -60,10 +60,13 @@ class TestUser implements SanctumUserInterface, Jsonable, Arrayable
 
     public function toArray()
     {
+        $accessToken = $this->accessToken;
+
         return [
-            'id'       => $this->getId(),
-            'username' => $this->getUsername(),
-            'email'    => $this->getEmail(),
+            'id'          => $this->getId(),
+            'username'    => $this->getUsername(),
+            'email'       => $this->getEmail(),
+            'accessToken' => null !== $accessToken && ($accessToken instanceof Arrayable) ? $this->accessToken->toArray() : [],
         ];
     }
 

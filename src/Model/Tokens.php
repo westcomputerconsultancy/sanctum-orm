@@ -72,6 +72,14 @@ abstract class Tokens implements TokenModelInterface
     protected $owner;
 
     /**
+     * @return \DateTime
+     */
+    public function getLastUsedAt()
+    {
+        return $this->lastUsedAt;
+    }
+
+    /**
      * Determine if the token has a given ability.
      *
      * @param string $ability
