@@ -119,4 +119,28 @@ class GuardTest extends TestCase
         $this->assertNotNull($retVal = $guard($request));
         $this->assertSame($user, $retVal);
     }
+
+    public function testInvokeWithInvalidRequest()
+    {
+        $guard = $this->guard;
+        $request = $this->createMock(Request::class);
+        $authFactory = $this->authFactory;
+        $statefullGuard = $this->createMock(StatefulGuard::class);
+        
+        $authFactory->expects($this->once())
+            ->method('guard')
+            ->with('web')
+            ->willReturn($statefullGuard);
+
+        $statefullGuard->expects($this->once())
+            ->method('user')
+            ->willReturn(null);
+
+        $request
+            ->expects($this->once())
+            ->method('bearerToken')
+            ->willReturn(null);
+
+        $this->assertNull($guard($request));
+    }
 }

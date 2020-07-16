@@ -89,9 +89,9 @@ class Guard
 
                 return $manager->updateAccessToken($accessToken);
             }
-
-            return null;
         }
+
+        return null;
     }
 
     /**
