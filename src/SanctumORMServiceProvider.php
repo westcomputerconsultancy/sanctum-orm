@@ -86,7 +86,7 @@ class SanctumORMServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            TokenManager::class,
+            TokenManagerInterface::class,
         ];
     }
 
@@ -148,11 +148,11 @@ class SanctumORMServiceProvider extends ServiceProvider
             throw new \InvalidArgumentException('You have to configure "sanctum_orm.doctrine.models.token"');
         }
         if (!class_exists($tokenModel)) {
-            throw new \InvalidArgumentException(sprintf('Can not use doctrine orm model "%s", class not exist.', $tokenModel));
+            throw new \InvalidArgumentException(sprintf('Can not use doctrine orm model "%s", class not exists.', $tokenModel));
         }
 
         if (empty($userModel)) {
-            throw new \InvalidArgumentException('You have to configure "sanctum_orm.doctrine.models.user');
+            throw new \InvalidArgumentException('You have to configure "sanctum_orm.doctrine.models.user"');
         }
         if (!class_exists($userModel)) {
             throw new \InvalidArgumentException(sprintf('Can not use doctrine orm model "%s", class not exist.', $userModel));

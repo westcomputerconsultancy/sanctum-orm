@@ -60,24 +60,16 @@ abstract class Tokens implements TokenModelInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      *
-     * @var \DateTime
+     * @var \DateTime|null
      */
     protected $lastUsedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kilip\SanctumORM\Contracts\SanctumUserInterface")
      *
-     * @var SanctumUserInterface
+     * @var SanctumUserInterface|null
      */
     protected $owner;
-
-    /**
-     * @return \DateTime
-     */
-    public function getLastUsedAt()
-    {
-        return $this->lastUsedAt;
-    }
 
     /**
      * Determine if the token has a given ability.
@@ -116,6 +108,17 @@ abstract class Tokens implements TokenModelInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getLastUsedAt()
+    {
+        return $this->lastUsedAt;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getOwner()
     {
         return $this->owner;

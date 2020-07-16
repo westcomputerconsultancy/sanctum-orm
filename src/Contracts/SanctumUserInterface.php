@@ -19,11 +19,6 @@ use Laravel\Sanctum\Contracts\HasAbilities;
 interface SanctumUserInterface extends Authenticatable
 {
     /**
-     * @return TokenModelInterface[]
-     */
-    public function getTokens();
-
-    /**
      * Determine if the current API token has a given scope.
      *
      * @param string $ability

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Kilip\SanctumORM\Model;
 
-use Doctrine\ORM\Mapping as ORM;
 use Kilip\SanctumORM\Contracts\TokenModelInterface;
 
 trait SanctumUserTrait
@@ -22,18 +21,6 @@ trait SanctumUserTrait
      * @var TokenModelInterface
      */
     protected $accessToken;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Kilip\SanctumORM\Contracts\TokenModelInterface", mappedBy="owner")
-     *
-     * @var TokenModelInterface[]
-     */
-    protected $tokens;
-
-    public function getTokens()
-    {
-        return $this->tokens;
-    }
 
     public function tokenCan(string $ability)
     {

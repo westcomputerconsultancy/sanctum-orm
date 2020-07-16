@@ -118,4 +118,17 @@ class TestCase extends OrchestraTestCase
     protected function loggedInAs($username = 'test')
     {
     }
+
+    protected function verifyAttributes($ob, $name, $value, $defaultValue=null, $fluent=true)
+    {
+        $setter = [$ob, 'set'.$name];
+        $getter = [$ob, 'get'.$name];
+
+        $this->assertEquals($defaultValue, \call_user_func($getter));
+        $retSetter = \call_user_func_array($setter, [$value]);
+        if ($fluent) {
+            $this->assertInstanceOf(TestTokens::class, $retSetter);
+        }
+        $this->assertEquals($value, \call_user_func($getter));
+    }
 }
