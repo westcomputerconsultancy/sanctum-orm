@@ -74,10 +74,13 @@ class Guard
         if ($token = $request->bearerToken()) {
             $accessToken = $manager->findToken($token);
 
-            if (!$accessToken ||
-                ($this->expiration &&
-                    Carbon::instance($accessToken->getCreatedAt())->lte(now()->subMinutes($this->expiration))) ||
-                !$this->hasValidProvider($accessToken->getOwner())) {
+            if (
+                !$accessToken
+                || (
+                    $this->expiration &&
+                    Carbon::instance($accessToken->getCreatedAt())->lte(now()->subMinutes($this->expiration)))
+                    || !$this->hasValidProvider($accessToken->getOwner())
+                ) {
                 return null;
             }
 
