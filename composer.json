@@ -25,6 +25,16 @@
             "Tests\\Kilip\\SanctumORM\\": "./tests"
         }
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Kilip\\SanctumORM\\SanctumORMServiceProvider"
+            ]
+        }
+    },
     "scripts": {
         "phpstan": "./vendor/bin/phpstan analyse --ansi",
         "phpunit": "./vendor/bin/phpunit --colors=always",
