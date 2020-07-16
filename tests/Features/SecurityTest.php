@@ -21,7 +21,7 @@ class SecurityTest extends TestCase
     public function testLogin()
     {
         $user     = $this->createUser();
-        $response = $this->post('/api/login', [
+        $response = $this->post('/api/token', [
             'email'    => 'test@example.com',
             'password' => 'test',
             'device'   => 'phpunit',
@@ -54,6 +54,6 @@ class SecurityTest extends TestCase
         $response = $this->get('/api/user', [
             'Authorization' => 'Bearer '.$token->plainTextToken,
         ]);
-        $response->assertStatus(404);
+        $response->assertStatus(302);
     }
 }

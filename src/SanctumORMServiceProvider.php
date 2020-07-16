@@ -16,6 +16,7 @@ namespace Kilip\SanctumORM;
 use Doctrine\ORM\Events;
 use Illuminate\Auth\RequestGuard;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,7 @@ use Kilip\SanctumORM\Manager\TokenManagerInterface;
 use Kilip\SanctumORM\Security\Guard;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use LaravelDoctrine\Extensions\Timestamps\TimestampableExtension;
+use LaravelDoctrine\ORM\IlluminateRegistry;
 
 class SanctumORMServiceProvider extends ServiceProvider
 {
@@ -37,6 +39,7 @@ class SanctumORMServiceProvider extends ServiceProvider
 
         $this->configureManager();
         $this->configureGuard();
+        $this->configureMiddleware();
     }
 
     public function register()
@@ -75,14 +78,7 @@ class SanctumORMServiceProvider extends ServiceProvider
     private function configureManager()
     {
         $this->app->singleton(TokenManagerInterface::class, function (Application $app) {
-            /** @var \LaravelDoctrine\ORM\IlluminateRegistry $registry */
-            $registry = $app->get('registry');
-            $tokenModel = (string) config('sanctum_orm.doctrine.models.token');
-            $userModel = (string) config('sanctum_orm.doctrine.models.user');
-            $tokenManager = $registry->getManagerForClass($tokenModel);
-            $userManager = $registry->getManagerForClass($userModel);
-
-            return new TokenManager($tokenManager, $userManager, $tokenModel, $userModel);
+            return $this->createTokenManager();
         });
         $this->app->alias(TokenManagerInterface::class, 'sanctum_orm.managers.token');
     }
@@ -124,7 +120,7 @@ class SanctumORMServiceProvider extends ServiceProvider
             new Guard(
                 $auth,
                 $this->app->get(TokenManagerInterface::class),
-                config('sanctum.expiration'),
+                (int) config('sanctum.expiration', 0),
                 $config['provider']),
             $this->app['request'],
             $auth->createUserProvider()
@@ -132,12 +128,46 @@ class SanctumORMServiceProvider extends ServiceProvider
     }
 
     /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     protected function configureMiddleware()
     {
         $kernel = $this->app->make(Kernel::class);
 
         $kernel->prependToMiddlewarePriority(EnsureFrontendRequestsAreStateful::class);
+    }
+
+    private function createTokenManager()
+    {
+        /** @var IlluminateRegistry $registry */
+        $registry   = $this->app->get('registry');
+        $tokenModel = (string) config('sanctum_orm.doctrine.models.token');
+        $userModel  = (string) config('sanctum_orm.doctrine.models.user');
+
+        if (empty($tokenModel)) {
+            throw new \InvalidArgumentException('You have to configure "sanctum_orm.doctrine.models.token"');
+        }
+        if (!class_exists($tokenModel)) {
+            throw new \InvalidArgumentException(sprintf('Can not use doctrine orm model "%s", class not exist.', $tokenModel));
+        }
+
+        if (empty($userModel)) {
+            throw new \InvalidArgumentException('You have to configure "sanctum_orm.doctrine.models.user');
+        }
+        if (!class_exists($userModel)) {
+            throw new \InvalidArgumentException(sprintf('Can not use doctrine orm model "%s", class not exist.', $userModel));
+        }
+
+        $tokenManager = $registry->getManagerForClass($tokenModel);
+        if (null === $tokenManager) {
+            throw new \InvalidArgumentException(sprintf('Can not find valid Entity Manager for "%s" class.', $tokenModel));
+        }
+
+        $userManager = $registry->getManagerForClass($userModel);
+        if (null === $userManager) {
+            throw new \InvalidArgumentException(sprintf('Can not find valid Entity Manager for "%s" class.', $userModel));
+        }
+
+        return new TokenManager($tokenManager, $userManager, $tokenModel, $userModel);
     }
 }

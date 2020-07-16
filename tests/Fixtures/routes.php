@@ -24,7 +24,9 @@ Route::middleware('auth:sanctum')
         return response()->json($request->user());
     });
 
-Route::post('/api/login', function (TokenManagerInterface $tokenManager, Request $request) {
+Route::post('/api/token', function (Request $request) {
+    /** @var TokenManagerInterface $tokenManager */
+    $tokenManager = app()->get(TokenManagerInterface::class);
     $request->validate([
         'email'    => 'required|email',
         'password' => 'required',

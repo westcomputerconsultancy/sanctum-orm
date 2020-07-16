@@ -31,7 +31,7 @@ class TestCase extends OrchestraTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        include_once __DIR__.'/Fixtures/routes.php';
+        include __DIR__.'/Fixtures/routes.php';
 
         $this->artisan('doctrine:schema:create');
     }
