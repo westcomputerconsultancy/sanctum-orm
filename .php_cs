@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 $header = <<<'HEADER'
-This file is part of the Kilip Laravel Alice project.
+This file is part of the Sanctum ORM project.
 
 (c) Anthonius Munthi <https://itstoni.com>
 

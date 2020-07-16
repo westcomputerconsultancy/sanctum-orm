@@ -29,6 +29,8 @@
         "php": "^7.2",
         "ext-json": "*",
         "doctrine/orm": "^2.7",
+        "gedmo/doctrine-extensions": "^2.4",
+        "laravel-doctrine/extensions": "^1.2",
         "laravel-doctrine/orm": "^1.6",
         "laravel/sanctum": "^2.4"
     },

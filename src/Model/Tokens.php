@@ -1,25 +1,34 @@
 <?php
 
+/*
+ * This file is part of the Sanctum ORM project.
+ *
+ * (c) Anthonius Munthi <https://itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
 
 namespace Kilip\DoctrineSanctum\Model;
 
-use Doctrine\DBAL\Schema\Column;
 use Doctrine\ORM\Mapping as ORM;
 use Kilip\DoctrineSanctum\Contracts\SanctumUserInterface;
+use Kilip\DoctrineSanctum\Contracts\TokenModelInterface;
+use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 
 /**
- * Class Tokens
+ * Class Tokens.
  *
- * @ORM\MappedSuperclass()
- *
- * @package Kilip\DoctrineSanctum\Model
+ * @ORM\MappedSuperclass
  */
-abstract class Tokens implements SanctumUserInterface
+abstract class Tokens implements TokenModelInterface
 {
-
+    use Timestamps;
     /**
      * @ORM\Column(type="bigint")
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      *
      * @var int
@@ -28,19 +37,20 @@ abstract class Tokens implements SanctumUserInterface
 
     /**
      * @ORM\Column(type="string")
+     *
      * @var string
      */
     protected $name;
 
     /**
-     * @ORM\Column(type="string",unique=true)
+     * @ORM\Column(type="string", unique=true)
      *
      * @var string
      */
     protected $token;
 
     /**
-     * @ORM\Column(type="array",nullable=true)
+     * @ORM\Column(type="array", nullable=true)
      *
      * @var array
      */
@@ -48,12 +58,95 @@ abstract class Tokens implements SanctumUserInterface
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     *
      * @var \DateTime
      */
     protected $lastUsedAt;
 
     /**
-     * @var string
+     * @ORM\ManyToOne(targetEntity="\Kilip\DoctrineSanctum\Contracts\SanctumUserInterface")
+     *
+     * @var SanctumUserInterface
      */
     protected $owner;
+
+    /**
+     * Determine if the token has a given ability.
+     *
+     * @param  string  $ability
+     * @return bool
+     */
+    public function can($ability)
+    {
+        return in_array('*', $this->abilities) ||
+            array_key_exists($ability, array_flip($this->abilities));
+    }
+
+    /**
+     * Determine if the token is missing a given ability.
+     *
+     * @param  string  $ability
+     * @return bool
+     */
+    public function cant($ability)
+    {
+        return ! $this->can($ability);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setLastUsedAt(\DateTime $date)
+    {
+        $this->lastUsedAt = $date;
+        return $this;
+    }
+
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(SanctumUserInterface $user)
+    {
+        $this->owner = $user;
+
+        return $this;
+    }
+
+    public function setName(string $name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setToken(string $token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    public function setAbilities(array $abilities = ['*'])
+    {
+        $this->abilities = $abilities;
+        return $this;
+    }
+
+    public function getAbilities()
+    {
+        return $this->abilities;
+    }
 }
