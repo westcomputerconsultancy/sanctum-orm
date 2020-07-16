@@ -88,9 +88,9 @@ class TokenManager implements TokenManagerInterface
         $plainTextToken = Str::random(80);
         $token          = new $this->tokenModel();
         $token->setName($name)
+            ->setOwner($user)
             ->setToken(hash('sha256', $plainTextToken))
             ->setAbilities($abilities);
-        $user->addToken($token);
 
         $this->storeToken($token);
         $this->storeUser($user);

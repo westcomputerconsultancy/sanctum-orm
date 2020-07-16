@@ -52,7 +52,7 @@ interface TokenModelInterface extends HasAbilities
     public function getOwner();
 
     /**
-     * @param SanctumUserInterface|object $user
+     * @param SanctumUserInterface $user
      *
      * @return static
      */

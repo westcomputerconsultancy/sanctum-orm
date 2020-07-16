@@ -30,16 +30,6 @@ trait SanctumUserTrait
      */
     protected $tokens;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addToken(TokenModelInterface $token)
-    {
-        $token->setOwner($this);
-
-        return $this;
-    }
-
     public function getTokens()
     {
         return $this->tokens;

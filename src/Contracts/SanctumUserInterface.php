@@ -19,13 +19,6 @@ use Laravel\Sanctum\Contracts\HasAbilities;
 interface SanctumUserInterface extends Authenticatable
 {
     /**
-     * @param TokenModelInterface $token
-     *
-     * @return static
-     */
-    public function addToken(TokenModelInterface $token);
-
-    /**
      * @return TokenModelInterface[]
      */
     public function getTokens();

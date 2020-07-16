@@ -76,7 +76,6 @@ class SanctumORMServiceProvider extends ServiceProvider
     {
         $this->app->singleton(TokenManagerInterface::class, function (Application $app) {
             /** @var \LaravelDoctrine\ORM\IlluminateRegistry $registry */
-            $config = config();
             $registry = $app->get('registry');
             $tokenModel = (string) config('sanctum_orm.doctrine.models.token');
             $userModel = (string) config('sanctum_orm.doctrine.models.user');
