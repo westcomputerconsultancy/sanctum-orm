@@ -19,6 +19,8 @@ use Kilip\SanctumORM\Manager\TokenManagerInterface;
 
 Route::middleware('auth:sanctum')
     ->get('/api/user', function (Request $request) {
+        $user = $request->user();
+
         return response()->json($request->user());
     });
 
@@ -37,5 +39,5 @@ Route::post('/api/login', function (TokenManagerInterface $tokenManager, Request
 
     $token = $tokenManager->createToken($user, $request->get('device'));
 
-    return response()->json(['token' => $token->plainTextToken]);
+    return response()->json($token);
 });

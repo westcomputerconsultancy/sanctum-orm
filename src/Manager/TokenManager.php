@@ -55,6 +55,24 @@ class TokenManager implements TokenManagerInterface
     }
 
     /**
+     * @param string $usernameOrEmail
+     *
+     * @return SanctumUserInterface|object|null
+     */
+    public function findUserByUsernameOrEmail(string $usernameOrEmail)
+    {
+        if ($user = $this->findUserBy(['username' => $usernameOrEmail])) {
+            return $user;
+        }
+
+        if ($user = $this->findUserBy(['email' => $usernameOrEmail])) {
+            return $user;
+        }
+
+        return null;
+    }
+
+    /**
      * @param array $criteria
      *
      * @return SanctumUserInterface|object|null

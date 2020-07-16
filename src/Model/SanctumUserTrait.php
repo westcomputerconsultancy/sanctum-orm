@@ -15,12 +15,11 @@ namespace Kilip\SanctumORM\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kilip\SanctumORM\Contracts\TokenModelInterface;
-use Laravel\Sanctum\Contracts\HasAbilities;
 
 trait SanctumUserTrait
 {
     /**
-     * @var HasAbilities
+     * @var TokenModelInterface
      */
     protected $accessToken;
 

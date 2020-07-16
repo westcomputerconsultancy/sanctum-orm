@@ -28,12 +28,14 @@ class SecurityTest extends TestCase
 
         $json = $response->json();
         $response->assertOk();
-        $this->assertNotNull($token = $json['token']);
+        $this->assertNotNull($token = $json['plainTextToken']);
 
-        $this->withToken($token);
-        $response = $this->withToken($token)->get('/api/user');
-        $json     = $response->json();
-
+        $response = $this->get('/api/user', [
+            'Authorization' => 'Bearer '.$token,
+        ]);
+        $json = $response->json();
         $response->assertOk();
+        $this->assertNotCount(0, $json);
+        $this->assertSame($user->toArray(), $json);
     }
 }

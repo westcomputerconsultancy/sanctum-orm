@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Tests\Kilip\SanctumORM\Fixtures\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Kilip\SanctumORM\Contracts\SanctumUserInterface;
 use Kilip\SanctumORM\Model\SanctumUserTrait;
 use LaravelDoctrine\ORM\Auth\Authenticatable as AuthenticatableTrait;
@@ -23,7 +25,7 @@ use LaravelDoctrine\ORM\Auth\Authenticatable as AuthenticatableTrait;
  *
  * @ORM\Entity
  */
-class TestUser implements SanctumUserInterface
+class TestUser implements SanctumUserInterface, Jsonable, Arrayable
 {
     use AuthenticatableTrait;
     use SanctumUserTrait;
@@ -50,6 +52,20 @@ class TestUser implements SanctumUserInterface
      * @var string
      */
     protected $email;
+
+    public function toJson($options = 0)
+    {
+        return json_encode($this->toArray(), $options);
+    }
+
+    public function toArray()
+    {
+        return [
+            'id'       => $this->getId(),
+            'username' => $this->getUsername(),
+            'email'    => $this->getEmail(),
+        ];
+    }
 
     /**
      * @return string

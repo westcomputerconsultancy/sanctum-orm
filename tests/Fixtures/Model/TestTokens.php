@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Tests\Kilip\SanctumORM\Fixtures\Model;
 
 use Doctrine\ORM\Mapping as ORM;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Kilip\SanctumORM\Model\Tokens;
 
 /**
@@ -21,6 +23,18 @@ use Kilip\SanctumORM\Model\Tokens;
  *
  * @ORM\Entity
  */
-class TestTokens extends Tokens
+class TestTokens extends Tokens implements Jsonable, Arrayable
 {
+    public function toArray()
+    {
+        return [
+            'name'  => $this->getName(),
+            'token' => $this->getToken(),
+        ];
+    }
+
+    public function toJson($options = 0)
+    {
+        return json_encode($this->toArray(), $options);
+    }
 }

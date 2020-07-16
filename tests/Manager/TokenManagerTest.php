@@ -15,11 +15,14 @@ namespace Tests\Kilip\SanctumORM\Manager;
 
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Kilip\SanctumORM\Contracts\SanctumUserInterface;
 use Kilip\SanctumORM\Contracts\TokenModelInterface;
 use Kilip\SanctumORM\Manager\TokenManager;
 use Kilip\SanctumORM\Security\NewAccessToken;
 use Laravel\Sanctum\TransientToken;
+use PHPUnit\Framework\MockObject\MockObject as PHPUnitMockObject;
 use Tests\Kilip\SanctumORM\Fixtures\Model\TestTokens;
 use Tests\Kilip\SanctumORM\Fixtures\Model\TestUser;
 use Tests\Kilip\SanctumORM\TestCase;
@@ -27,12 +30,12 @@ use Tests\Kilip\SanctumORM\TestCase;
 class TokenManagerTest extends TestCase
 {
     /**
-     * @var ObjectManager|\PHPUnit\Framework\MockObject\MockObject
+     * @var ObjectManager|PHPUnitMockObject
      */
     private $omToken;
 
     /**
-     * @var ObjectManager|\PHPUnit\Framework\MockObject\MockObject
+     * @var ObjectManager|PHPUnitMockObject
      */
     private $omUser;
 
@@ -88,6 +91,36 @@ class TokenManagerTest extends TestCase
         $this->assertSame($token, $manager->findToken('some-token'));
     }
 
+    public function testFindTokenWithDelimiter()
+    {
+        $omToken        = $this->omToken;
+        $repository     = $this->createMock(ObjectRepository::class);
+        $token          = $this->createMock(TokenModelInterface::class);
+        $manager        = $this->tokenManager;
+        $plainTextToken = Str::random(80);
+        $hashed         = hash('sha256', $plainTextToken);
+
+        $token->expects($this->once())
+            ->method('getToken')
+            ->willReturn($hashed);
+
+        $omToken->expects($this->any())
+            ->method('getRepository')
+            ->with(TestTokens::class)
+            ->willReturn($repository);
+
+        $repository->expects($this->exactly(2))
+            ->method('find')
+            ->with('id')
+            ->willReturnOnConsecutiveCalls(
+                null, $token
+            );
+
+        $formattedToken = 'id|'.$plainTextToken;
+        $this->assertNull($manager->findToken($formattedToken));
+        $this->assertSame($token, $manager->findToken($formattedToken));
+    }
+
     public function testCreateTransientToken()
     {
         $manager = $this->tokenManager;
@@ -126,5 +159,42 @@ class TokenManagerTest extends TestCase
             ->with($user);
 
         $this->assertSame($user, $manager->updateAccessToken($token));
+    }
+
+    public function testFindUserByUsernameOrEmail()
+    {
+        $manager    = $this->tokenManager;
+        $omUser     = $this->omUser;
+        $repository = $this->createMock(ObjectRepository::class);
+        $user       = $this->createMock(SanctumUserInterface::class);
+
+        $omUser->method('getRepository')
+            ->with(TestUser::class)
+            ->willReturn($repository);
+
+        $repository->expects($this->at(0))
+            ->method('findOneBy')
+            ->with(['username'=>'username'])
+            ->willReturn($user);
+        $repository->expects($this->at(1))
+            ->method('findOneBy')
+            ->with(['username'=>'email'])
+            ->willReturn(null);
+        $repository->expects($this->at(2))
+            ->method('findOneBy')
+            ->with(['email'=>'email'])
+            ->willReturn($user);
+        $repository->expects($this->at(3))
+            ->method('findOneBy')
+            ->with(['username'=>'foo'])
+            ->willReturn(null);
+        $repository->expects($this->at(4))
+            ->method('findOneBy')
+            ->with(['email'=>'foo'])
+            ->willReturn(null);
+
+        $this->assertSame($user, $manager->findUserByUsernameOrEmail('username'));
+        $this->assertSame($user, $manager->findUserByUsernameOrEmail('email'));
+        $this->assertNull($manager->findUserByUsernameOrEmail('foo'));
     }
 }

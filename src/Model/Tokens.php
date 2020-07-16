@@ -26,6 +26,7 @@ use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 abstract class Tokens implements TokenModelInterface
 {
     use Timestamps;
+
     /**
      * @ORM\Column(type="bigint")
      * @ORM\Id

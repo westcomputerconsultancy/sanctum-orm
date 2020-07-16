@@ -62,6 +62,7 @@ class TestCase extends OrchestraTestCase
         $config->set('auth.providers.users.model', TestUser::class);
         $config->set('sanctum_orm.doctrine.models.token', TestTokens::class);
         $config->set('sanctum_orm.doctrine.models.user', TestUser::class);
+        $config->set('sanctum.expiration', 3600);
     }
 
     /**
@@ -109,5 +110,12 @@ class TestCase extends OrchestraTestCase
     protected function getManager($className)
     {
         return app()->get('registry')->getManagerForClass($className);
+    }
+
+    /**
+     * @param string $username
+     */
+    protected function loggedInAs($username = 'test')
+    {
     }
 }

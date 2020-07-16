@@ -58,4 +58,11 @@ interface TokenManagerInterface
      * @return SanctumUserInterface|null
      */
     public function findUserBy(array $criteria);
+
+    /**
+     * @param string $username
+     *
+     * @return SanctumUserInterface|object|null
+     */
+    public function findUserByUsernameOrEmail(string $username);
 }
