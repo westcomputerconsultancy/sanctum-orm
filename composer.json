@@ -1,0 +1,44 @@
+{
+    "name": "kilip/doctrine-sanctum",
+    "description": "Doctrine integration for Laravel Sanctum",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anthonius Munthi",
+            "email": "me@itstoni.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kilip\\DoctrineSanctum\\": "./src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Kilip\\DoctrineSanctum\\": "./tests"
+        }
+    },
+    "require": {
+        "php": "^7.2",
+        "ext-json": "*",
+        "doctrine/orm": "^2.7",
+        "laravel-doctrine/orm": "^1.6",
+        "laravel/sanctum": "^2.4"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "orchestra/testbench": "^3.8|^4.0|^5.0",
+        "phpstan/extension-installer": "^1.0",
+        "phpstan/phpstan": "^0.12.30",
+        "phpstan/phpstan-doctrine": "^0.12.16",
+        "phpstan/phpstan-phpunit": "^0.12.11",
+        "phpunit/phpunit": "^8.5.8"
+    }
+}
