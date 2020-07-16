@@ -101,7 +101,7 @@ class TokenManager implements TokenManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function createTransientToken(SanctumUserInterface $user)
+    public function createTransientToken($user)
     {
         /* @var \Kilip\DoctrineSanctum\Contracts\TokenModelInterface $token */
         $user->withAccessToken(new TransientToken());
@@ -116,8 +116,6 @@ class TokenManager implements TokenManagerInterface
      */
     public function updateAccessToken(TokenModelInterface $token)
     {
-        $omToken = $this->omToken;
-
         $token->setLastUsedAt(now());
         $token->getOwner()->withAccessToken($token);
 

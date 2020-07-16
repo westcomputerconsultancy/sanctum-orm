@@ -6,3 +6,10 @@ parameters:
 	earlyTerminatingMethodCalls:
 		PHPUnit\Framework\Constraint\Constraint:
 			- fail
+	ignoreErrors:
+	    - '#PHPDoc tag @var does not match assigned variable#'
+	    - '#in PHPDoc tag @var does not exist#'
+	    - '#Authenticatable::withAccessToken#'
+	    - '#createTransientToken\(\) should return#'
+	    - '#Application::refresh#'
+	    - '#Factory::createUserProvider#'

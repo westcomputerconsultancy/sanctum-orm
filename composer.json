@@ -25,6 +25,16 @@
             "Tests\\Kilip\\DoctrineSanctum\\": "./tests"
         }
     },
+    "scripts": {
+        "phpstan": "./vendor/bin/phpstan analyse --ansi",
+        "test": "./vendor/bin/phpunit",
+        "phpcs": "./vendor/bin/php-cs-fixer fix --ansi",
+        "verify": [
+            "@phpcs --dry-run --diff",
+            "@phpunit",
+            "@phpstan"
+        ]
+    },
     "require": {
         "php": "^7.2",
         "ext-json": "*",

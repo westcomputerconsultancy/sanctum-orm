@@ -39,16 +39,16 @@ interface TokenManagerInterface
     public function findToken(string $token);
 
     /**
-     * @param SanctumUserInterface|Authenticatable $user
+     * @param Authenticatable|SanctumUserInterface $user
      *
      * @return SanctumUserInterface
      */
-    public function createTransientToken(SanctumUserInterface $user);
+    public function createTransientToken($user);
 
     /**
      * @param TokenModelInterface $token
      *
-     * @return SanctumUserInterface
+     * @return SanctumUserInterface|Authenticatable
      */
     public function updateAccessToken(TokenModelInterface $token);
 
