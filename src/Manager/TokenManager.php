@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Kilip\DoctrineSanctum\Manager;
+namespace Kilip\SanctumORM\Manager;
 
 use Doctrine\Persistence\ObjectManager;
 use Illuminate\Support\Str;
-use Kilip\DoctrineSanctum\Contracts\SanctumUserInterface;
-use Kilip\DoctrineSanctum\Contracts\TokenModelInterface;
-use Kilip\DoctrineSanctum\Security\NewAccessToken;
+use Kilip\SanctumORM\Contracts\SanctumUserInterface;
+use Kilip\SanctumORM\Contracts\TokenModelInterface;
+use Kilip\SanctumORM\Security\NewAccessToken;
 use Laravel\Sanctum\TransientToken;
 
 class TokenManager implements TokenManagerInterface
@@ -103,7 +103,7 @@ class TokenManager implements TokenManagerInterface
      */
     public function createTransientToken($user)
     {
-        /* @var \Kilip\DoctrineSanctum\Contracts\TokenModelInterface $token */
+        /* @var \Kilip\SanctumORM\Contracts\TokenModelInterface $token */
         $user->withAccessToken(new TransientToken());
 
         return $user;

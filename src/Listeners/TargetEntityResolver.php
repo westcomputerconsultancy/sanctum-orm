@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Kilip\DoctrineSanctum\Listeners;
+namespace Kilip\SanctumORM\Listeners;
 
 use Doctrine\ORM\Tools\ResolveTargetEntityListener;
-use Kilip\DoctrineSanctum\Contracts\SanctumUserInterface;
-use Kilip\DoctrineSanctum\Contracts\TokenModelInterface;
+use Kilip\SanctumORM\Contracts\SanctumUserInterface;
+use Kilip\SanctumORM\Contracts\TokenModelInterface;
 
 class TargetEntityResolver extends ResolveTargetEntityListener
 {

@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Kilip\DoctrineSanctum\Fixtures\Model;
+namespace Tests\Kilip\SanctumORM\Fixtures\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kilip\DoctrineSanctum\Model\Tokens;
+use Kilip\SanctumORM\Model\Tokens;
 
 /**
  * Class TestTokens.

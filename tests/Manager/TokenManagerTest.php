@@ -11,18 +11,18 @@
 
 declare(strict_types=1);
 
-namespace Tests\Kilip\DoctrineSanctum\Manager;
+namespace Tests\Kilip\SanctumORM\Manager;
 
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
-use Kilip\DoctrineSanctum\Contracts\SanctumUserInterface;
-use Kilip\DoctrineSanctum\Contracts\TokenModelInterface;
-use Kilip\DoctrineSanctum\Manager\TokenManager;
-use Kilip\DoctrineSanctum\Security\NewAccessToken;
+use Kilip\SanctumORM\Contracts\SanctumUserInterface;
+use Kilip\SanctumORM\Contracts\TokenModelInterface;
+use Kilip\SanctumORM\Manager\TokenManager;
+use Kilip\SanctumORM\Security\NewAccessToken;
 use Laravel\Sanctum\TransientToken;
-use Tests\Kilip\DoctrineSanctum\Fixtures\Model\TestTokens;
-use Tests\Kilip\DoctrineSanctum\Fixtures\Model\TestUser;
-use Tests\Kilip\DoctrineSanctum\TestCase;
+use Tests\Kilip\SanctumORM\Fixtures\Model\TestTokens;
+use Tests\Kilip\SanctumORM\Fixtures\Model\TestUser;
+use Tests\Kilip\SanctumORM\TestCase;
 
 class TokenManagerTest extends TestCase
 {

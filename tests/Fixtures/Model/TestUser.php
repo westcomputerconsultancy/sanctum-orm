@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Kilip\DoctrineSanctum\Fixtures\Model;
+namespace Tests\Kilip\SanctumORM\Fixtures\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kilip\DoctrineSanctum\Contracts\SanctumUserInterface;
-use Kilip\DoctrineSanctum\Model\SanctumUserTrait;
+use Kilip\SanctumORM\Contracts\SanctumUserInterface;
+use Kilip\SanctumORM\Model\SanctumUserTrait;
 use LaravelDoctrine\ORM\Auth\Authenticatable as AuthenticatableTrait;
 
 /**

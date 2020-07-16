@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Kilip\DoctrineSanctum\Security;
+namespace Kilip\SanctumORM\Security;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
-use Kilip\DoctrineSanctum\Contracts\TokenModelInterface;
+use Kilip\SanctumORM\Contracts\TokenModelInterface;
 
 class NewAccessToken implements Arrayable, Jsonable
 {

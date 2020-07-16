@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Kilip\DoctrineSanctum\Model;
+namespace Kilip\SanctumORM\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kilip\DoctrineSanctum\Contracts\SanctumUserInterface;
-use Kilip\DoctrineSanctum\Contracts\TokenModelInterface;
+use Kilip\SanctumORM\Contracts\SanctumUserInterface;
+use Kilip\SanctumORM\Contracts\TokenModelInterface;
 use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 
 /**
@@ -64,7 +64,7 @@ abstract class Tokens implements TokenModelInterface
     protected $lastUsedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Kilip\DoctrineSanctum\Contracts\SanctumUserInterface")
+     * @ORM\ManyToOne(targetEntity="Kilip\SanctumORM\Contracts\SanctumUserInterface")
      *
      * @var SanctumUserInterface
      */

@@ -11,16 +11,16 @@
 
 declare(strict_types=1);
 
-namespace Tests\Kilip\DoctrineSanctum\Security;
+namespace Tests\Kilip\SanctumORM\Security;
 
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
-use Kilip\DoctrineSanctum\Contracts\SanctumUserInterface;
-use Kilip\DoctrineSanctum\Contracts\TokenModelInterface;
-use Kilip\DoctrineSanctum\Manager\TokenManagerInterface;
-use Kilip\DoctrineSanctum\Security\Guard;
-use Tests\Kilip\DoctrineSanctum\TestCase;
+use Kilip\SanctumORM\Contracts\SanctumUserInterface;
+use Kilip\SanctumORM\Contracts\TokenModelInterface;
+use Kilip\SanctumORM\Manager\TokenManagerInterface;
+use Kilip\SanctumORM\Security\Guard;
+use Tests\Kilip\SanctumORM\TestCase;
 
 class GuardTest extends TestCase
 {

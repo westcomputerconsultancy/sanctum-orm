@@ -11,20 +11,20 @@
 
 declare(strict_types=1);
 
-namespace Tests\Kilip\DoctrineSanctum;
+namespace Tests\Kilip\SanctumORM;
 
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Illuminate\Support\Facades\Hash;
-use Kilip\DoctrineSanctum\Listeners\TargetEntityResolver;
-use Kilip\DoctrineSanctum\SanctumORMServiceProvider;
+use Kilip\SanctumORM\Listeners\TargetEntityResolver;
+use Kilip\SanctumORM\SanctumORMServiceProvider;
 use Laravel\Sanctum\SanctumServiceProvider;
 use LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider;
 use LaravelDoctrine\ORM\DoctrineServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Tests\Kilip\DoctrineSanctum\Fixtures\Model\TestTokens;
-use Tests\Kilip\DoctrineSanctum\Fixtures\Model\TestUser;
+use Tests\Kilip\SanctumORM\Fixtures\Model\TestTokens;
+use Tests\Kilip\SanctumORM\Fixtures\Model\TestUser;
 
 class TestCase extends OrchestraTestCase
 {

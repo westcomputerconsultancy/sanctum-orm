@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Kilip\DoctrineSanctum\Contracts;
+namespace Kilip\SanctumORM\Contracts;
 
 use Laravel\Sanctum\Contracts\HasAbilities;
 

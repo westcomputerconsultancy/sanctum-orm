@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Kilip\DoctrineSanctum;
+namespace Kilip\SanctumORM;
 
 use Doctrine\ORM\Events;
 use Illuminate\Auth\RequestGuard;
@@ -20,10 +20,10 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
-use Kilip\DoctrineSanctum\Listeners\TargetEntityResolver;
-use Kilip\DoctrineSanctum\Manager\TokenManager;
-use Kilip\DoctrineSanctum\Manager\TokenManagerInterface;
-use Kilip\DoctrineSanctum\Security\Guard;
+use Kilip\SanctumORM\Listeners\TargetEntityResolver;
+use Kilip\SanctumORM\Manager\TokenManager;
+use Kilip\SanctumORM\Manager\TokenManagerInterface;
+use Kilip\SanctumORM\Security\Guard;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use LaravelDoctrine\Extensions\Timestamps\TimestampableExtension;
 

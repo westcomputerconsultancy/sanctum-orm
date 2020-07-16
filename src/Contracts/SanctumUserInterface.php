@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Kilip\DoctrineSanctum\Contracts;
+namespace Kilip\SanctumORM\Contracts;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Kilip\DoctrineSanctum\Security\NewAccessToken;
+use Kilip\SanctumORM\Security\NewAccessToken;
 use Laravel\Sanctum\Contracts\HasAbilities;
 
 interface SanctumUserInterface extends Authenticatable

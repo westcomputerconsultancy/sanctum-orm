@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Kilip\DoctrineSanctum\Model;
+namespace Kilip\SanctumORM\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Kilip\DoctrineSanctum\Contracts\TokenModelInterface;
+use Kilip\SanctumORM\Contracts\TokenModelInterface;
 use Laravel\Sanctum\Contracts\HasAbilities;
 
 trait SanctumUserTrait
@@ -25,7 +25,7 @@ trait SanctumUserTrait
     protected $accessToken;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kilip\DoctrineSanctum\Contracts\TokenModelInterface", mappedBy="owner")
+     * @ORM\OneToMany(targetEntity="Kilip\SanctumORM\Contracts\TokenModelInterface", mappedBy="owner")
      *
      * @var TokenModelInterface[]
      */

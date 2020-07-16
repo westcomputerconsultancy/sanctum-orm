@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Kilip\DoctrineSanctum;
+namespace Tests\Kilip\SanctumORM;
 
 use Doctrine\Persistence\ObjectManager;
-use Tests\Kilip\DoctrineSanctum\Fixtures\Model\TestUser;
+use Tests\Kilip\SanctumORM\Fixtures\Model\TestUser;
 
 class SanctumORMServiceProviderTest extends TestCase
 {

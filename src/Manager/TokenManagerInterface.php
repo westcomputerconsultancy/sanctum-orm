@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Kilip\DoctrineSanctum\Manager;
+namespace Kilip\SanctumORM\Manager;
 
 use Illuminate\Contracts\Auth\Authenticatable;
-use Kilip\DoctrineSanctum\Contracts\SanctumUserInterface;
-use Kilip\DoctrineSanctum\Contracts\TokenModelInterface;
-use Kilip\DoctrineSanctum\Security\NewAccessToken;
+use Kilip\SanctumORM\Contracts\SanctumUserInterface;
+use Kilip\SanctumORM\Contracts\TokenModelInterface;
+use Kilip\SanctumORM\Security\NewAccessToken;
 
 interface TokenManagerInterface
 {

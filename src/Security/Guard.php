@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Kilip\DoctrineSanctum\Security;
+namespace Kilip\SanctumORM\Security;
 
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Kilip\DoctrineSanctum\Contracts\SanctumUserInterface;
-use Kilip\DoctrineSanctum\Manager\TokenManagerInterface;
+use Kilip\SanctumORM\Contracts\SanctumUserInterface;
+use Kilip\SanctumORM\Manager\TokenManagerInterface;
 
 class Guard
 {

@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
-use Kilip\DoctrineSanctum\Manager\TokenManagerInterface;
+use Kilip\SanctumORM\Manager\TokenManagerInterface;
 
 Route::middleware('auth:sanctum')
     ->get('/api/user', function (Request $request) {

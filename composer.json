@@ -1,5 +1,5 @@
 {
-    "name": "kilip/doctrine-sanctum",
+    "name": "kilip/sanctum-orm",
     "description": "Doctrine integration for Laravel Sanctum",
     "type": "library",
     "license": "MIT",
@@ -17,17 +17,17 @@
     },
     "autoload": {
         "psr-4": {
-            "Kilip\\DoctrineSanctum\\": "./src/"
+            "Kilip\\SanctumORM\\": "./src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Kilip\\DoctrineSanctum\\": "./tests"
+            "Tests\\Kilip\\SanctumORM\\": "./tests"
         }
     },
     "scripts": {
         "phpstan": "./vendor/bin/phpstan analyse --ansi",
-        "test": "./vendor/bin/phpunit",
+        "phpunit": "./vendor/bin/phpunit --colors=always",
         "phpcs": "./vendor/bin/php-cs-fixer fix --ansi",
         "verify": [
             "@phpcs --dry-run --diff",

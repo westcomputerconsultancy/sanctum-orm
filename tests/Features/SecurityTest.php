@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Kilip\DoctrineSanctum\Features;
+namespace Tests\Kilip\SanctumORM\Features;
 
-use Tests\Kilip\DoctrineSanctum\TestCase;
+use Tests\Kilip\SanctumORM\TestCase;
 
 class SecurityTest extends TestCase
 {
