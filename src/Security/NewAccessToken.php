@@ -17,7 +17,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Kilip\DoctrineSanctum\Contracts\TokenModelInterface;
 
-class NewAccessToken implements Arrayable,Jsonable
+class NewAccessToken implements Arrayable, Jsonable
 {
     /**
      * The access token instance.
@@ -36,13 +36,14 @@ class NewAccessToken implements Arrayable,Jsonable
     /**
      * Create a new access token result.
      *
-     * @param  TokenModelInterface  $accessToken
-     * @param  string  $plainTextToken
+     * @param TokenModelInterface $accessToken
+     * @param string              $plainTextToken
+     *
      * @return void
      */
     public function __construct(TokenModelInterface $accessToken, string $plainTextToken)
     {
-        $this->accessToken = $accessToken;
+        $this->accessToken    = $accessToken;
         $this->plainTextToken = $plainTextToken;
     }
 
@@ -54,7 +55,7 @@ class NewAccessToken implements Arrayable,Jsonable
     public function toArray()
     {
         return [
-            'accessToken' => $this->accessToken,
+            'accessToken'    => $this->accessToken,
             'plainTextToken' => $this->plainTextToken,
         ];
     }
@@ -62,7 +63,8 @@ class NewAccessToken implements Arrayable,Jsonable
     /**
      * Convert the object to its JSON representation.
      *
-     * @param  int  $options
+     * @param int $options
+     *
      * @return string
      */
     public function toJson($options = 0)

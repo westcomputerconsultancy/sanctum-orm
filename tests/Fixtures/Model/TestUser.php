@@ -61,11 +61,13 @@ class TestUser implements SanctumUserInterface
 
     /**
      * @param string $id
+     *
      * @return TestUser
      */
-    public function setId(string $id): TestUser
+    public function setId(string $id): self
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -79,11 +81,13 @@ class TestUser implements SanctumUserInterface
 
     /**
      * @param string $username
+     *
      * @return TestUser
      */
-    public function setUsername(string $username): TestUser
+    public function setUsername(string $username): self
     {
         $this->username = $username;
+
         return $this;
     }
 
@@ -97,11 +101,13 @@ class TestUser implements SanctumUserInterface
 
     /**
      * @param string $email
+     *
      * @return TestUser
      */
-    public function setEmail(string $email): TestUser
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+
         return $this;
     }
 }

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Kilip\DoctrineSanctum\Manager;
 
-use Doctrine\Persistence\ObjectManager;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Kilip\DoctrineSanctum\Contracts\SanctumUserInterface;
 use Kilip\DoctrineSanctum\Contracts\TokenModelInterface;
@@ -22,11 +21,11 @@ use Kilip\DoctrineSanctum\Security\NewAccessToken;
 interface TokenManagerInterface
 {
     /**
-     * Creates new token for given user
+     * Creates new token for given user.
      *
      * @param SanctumUserInterface $user
-     * @param string $name
-     * @param array $abilities
+     * @param string               $name
+     * @param array                $abilities
      *
      * @return NewAccessToken
      */
@@ -48,12 +47,14 @@ interface TokenManagerInterface
 
     /**
      * @param TokenModelInterface $token
+     *
      * @return SanctumUserInterface
      */
     public function updateAccessToken(TokenModelInterface $token);
 
     /**
      * @param array $criteria
+     *
      * @return SanctumUserInterface|null
      */
     public function findUserBy(array $criteria);

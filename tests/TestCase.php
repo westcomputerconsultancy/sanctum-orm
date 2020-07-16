@@ -31,7 +31,7 @@ class TestCase extends OrchestraTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        include_once __DIR__ . '/Fixtures/routes.php';
+        include_once __DIR__.'/Fixtures/routes.php';
 
         $this->artisan('doctrine:schema:create');
     }
@@ -52,10 +52,10 @@ class TestCase extends OrchestraTestCase
         $config = $app['config'];
 
         $config->set('doctrine.managers.default.paths', [
-            __DIR__ . '/Fixtures/Model',
+            __DIR__.'/Fixtures/Model',
         ]);
         $config->set('doctrine.managers.default.events.listeners', [
-            Events::loadClassMetadata => TargetEntityResolver::class
+            Events::loadClassMetadata => TargetEntityResolver::class,
         ]);
 
         $config->set('auth.providers.users.driver', 'doctrine');
@@ -75,9 +75,9 @@ class TestCase extends OrchestraTestCase
     {
         $user = $this->getRepository(TestUser::class)
             ->findOneBy(['username' => $username]);
-        if(!$user){
+        if (!$user) {
             $manager = $this->getManager(TestUser::class);
-            $user = new TestUser();
+            $user    = new TestUser();
             $user->setUsername($username)
                 ->setEmail($email)
                 ->setPassword(Hash::make($password));
@@ -91,16 +91,19 @@ class TestCase extends OrchestraTestCase
 
     /**
      * @param $className
+     *
      * @return ObjectRepository
      */
     protected function getRepository($className)
     {
         $manager = $this->getManager($className);
+
         return $manager->getRepository($className);
     }
 
     /**
      * @param $className
+     *
      * @return ObjectManager
      */
     protected function getManager($className)

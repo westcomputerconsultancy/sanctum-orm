@@ -1,8 +1,17 @@
 <?php
 
+/*
+ * This file is part of the Sanctum ORM project.
+ *
+ * (c) Anthonius Munthi <https://itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
 
 namespace Tests\Kilip\DoctrineSanctum\Features;
-
 
 use Tests\Kilip\DoctrineSanctum\TestCase;
 
@@ -10,11 +19,11 @@ class SecurityTest extends TestCase
 {
     public function testLogin()
     {
-        $user = $this->createUser();
-        $response = $this->post('/api/login',[
-            'email' => 'test@example.com',
+        $user     = $this->createUser();
+        $response = $this->post('/api/login', [
+            'email'    => 'test@example.com',
             'password' => 'test',
-            'device' => 'phpunit'
+            'device'   => 'phpunit',
         ]);
 
         $json = $response->json();
@@ -23,7 +32,7 @@ class SecurityTest extends TestCase
 
         $this->withToken($token);
         $response = $this->withToken($token)->get('/api/user');
-        $json = $response->json();
+        $json     = $response->json();
 
         $response->assertOk();
     }

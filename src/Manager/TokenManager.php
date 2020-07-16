@@ -48,14 +48,15 @@ class TokenManager implements TokenManagerInterface
         string $tokenModel,
         string $userModel
     ) {
-        $this->omToken = $tokenManager;
-        $this->omUser = $userManager;
+        $this->omToken    = $tokenManager;
+        $this->omUser     = $userManager;
         $this->tokenModel = $tokenModel;
-        $this->userModel = $userModel;
+        $this->userModel  = $userModel;
     }
 
     /**
      * @param array $criteria
+     *
      * @return SanctumUserInterface|object|null
      */
     public function findUserBy(array $criteria)
@@ -65,40 +66,40 @@ class TokenManager implements TokenManagerInterface
 
     public function createToken(SanctumUserInterface $user, string $name, array $abilities=['*'])
     {
-        /* @var TokenModelInterface $token */
-
+        /** @var TokenModelInterface $token */
         $plainTextToken = Str::random(80);
-        $token = new $this->tokenModel();
+        $token          = new $this->tokenModel();
         $token->setName($name)
-            ->setToken(hash('sha256',$plainTextToken))
+            ->setToken(hash('sha256', $plainTextToken))
             ->setAbilities($abilities)
             ->setOwner($user);
         $this->storeToken($token);
 
-        return new NewAccessToken($token,$token->getId().'|'.$plainTextToken);
+        return new NewAccessToken($token, $token->getId().'|'.$plainTextToken);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function findToken(string $token)
     {
         $repository = $this->omToken->getRepository($this->tokenModel);
-        if(false === strpos($token,'|')){
+        if (false === strpos($token, '|')) {
             return $repository->findOneBy(['token' => $token]);
         }
 
         [$id, $token] = explode('|', $token, 2);
 
-        /* @var TokenModelInterface $instance */
-        if($instance = $repository->find($id)){
-            return hash_equals($instance->getToken(), hash('sha256',$token)) ? $instance:null;
+        /** @var TokenModelInterface $instance */
+        if ($instance = $repository->find($id)) {
+            return hash_equals($instance->getToken(), hash('sha256', $token)) ? $instance : null;
         }
+
         return null;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function createTransientToken(SanctumUserInterface $user)
     {
@@ -110,6 +111,7 @@ class TokenManager implements TokenManagerInterface
 
     /**
      * @param TokenModelInterface $token
+     *
      * @return SanctumUserInterface
      */
     public function updateAccessToken(TokenModelInterface $token)
@@ -130,7 +132,7 @@ class TokenManager implements TokenManagerInterface
         $om = $this->omUser;
 
         $om->persist($user);
-        if($andFlush){
+        if ($andFlush) {
             $om->flush();
         }
     }
@@ -139,7 +141,7 @@ class TokenManager implements TokenManagerInterface
     {
         $om = $this->omToken;
         $om->persist($token);
-        if($andFlush){
+        if ($andFlush) {
             $om->flush();
         }
     }

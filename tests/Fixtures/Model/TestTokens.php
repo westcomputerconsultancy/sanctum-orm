@@ -1,17 +1,25 @@
 <?php
 
+/*
+ * This file is part of the Sanctum ORM project.
+ *
+ * (c) Anthonius Munthi <https://itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
 
 namespace Tests\Kilip\DoctrineSanctum\Fixtures\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kilip\DoctrineSanctum\Model\Tokens;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Class TestTokens
+ * Class TestTokens.
  *
- * @ORM\Entity()
- * @package Tests\Kilip\DoctrineSanctum\Fixtures\Model
+ * @ORM\Entity
  */
 class TestTokens extends Tokens
 {

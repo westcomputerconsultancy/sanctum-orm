@@ -18,7 +18,7 @@ use Laravel\Sanctum\Contracts\HasAbilities;
 interface TokenModelInterface extends HasAbilities
 {
     /**
-     * @return string|integer
+     * @return string|int
      */
     public function getId();
 
@@ -41,12 +41,14 @@ interface TokenModelInterface extends HasAbilities
 
     /**
      * @param SanctumUserInterface $user
+     *
      * @return static
      */
     public function setOwner(SanctumUserInterface $user);
 
     /**
      * @param string $name
+     *
      * @return static
      */
     public function setName(string $name);
@@ -58,6 +60,7 @@ interface TokenModelInterface extends HasAbilities
 
     /**
      * @param string $token
+     *
      * @return static
      */
     public function setToken(string $token);
@@ -69,6 +72,7 @@ interface TokenModelInterface extends HasAbilities
 
     /**
      * @param array $abilities
+     *
      * @return static
      */
     public function setAbilities(array $abilities=['*']);

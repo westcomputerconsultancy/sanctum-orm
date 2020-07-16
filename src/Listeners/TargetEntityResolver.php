@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Kilip\DoctrineSanctum\Listeners;
 
-use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
-use Doctrine\ORM\Event\OnClassMetadataNotFoundEventArgs;
 use Doctrine\ORM\Tools\ResolveTargetEntityListener;
 use Kilip\DoctrineSanctum\Contracts\SanctumUserInterface;
 use Kilip\DoctrineSanctum\Contracts\TokenModelInterface;

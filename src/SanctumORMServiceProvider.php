@@ -26,7 +26,6 @@ use Kilip\DoctrineSanctum\Manager\TokenManagerInterface;
 use Kilip\DoctrineSanctum\Security\Guard;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use LaravelDoctrine\Extensions\Timestamps\TimestampableExtension;
-use LaravelDoctrine\ORM\IlluminateRegistry;
 
 class SanctumORMServiceProvider extends ServiceProvider
 {
@@ -68,8 +67,8 @@ class SanctumORMServiceProvider extends ServiceProvider
                 ],
             ],
             'doctrine.extensions' => array_merge([
-                TimestampableExtension::class
-            ],config('doctrine.extensions'))
+                TimestampableExtension::class,
+            ], config('doctrine.extensions')),
         ]);
     }
 
@@ -79,8 +78,8 @@ class SanctumORMServiceProvider extends ServiceProvider
             /** @var \LaravelDoctrine\ORM\IlluminateRegistry $registry */
             $config = config();
             $registry = $app->get('registry');
-            $tokenModel = (string)config('sanctum_orm.doctrine.models.token');
-            $userModel = (string)config('sanctum_orm.doctrine.models.user');
+            $tokenModel = (string) config('sanctum_orm.doctrine.models.token');
+            $userModel = (string) config('sanctum_orm.doctrine.models.user');
             $tokenManager = $registry->getManagerForClass($tokenModel);
             $userManager = $registry->getManagerForClass($userModel);
 
@@ -116,7 +115,8 @@ class SanctumORMServiceProvider extends ServiceProvider
      * Register the guard.
      *
      * @param AuthFactory $auth
-     * @param array $config
+     * @param array       $config
+     *
      * @return RequestGuard
      */
     protected function createGuard($auth, $config)
@@ -126,8 +126,7 @@ class SanctumORMServiceProvider extends ServiceProvider
                 $auth,
                 $this->app->get(TokenManagerInterface::class),
                 config('sanctum.expiration'),
-                $config['provider'])
-            ,
+                $config['provider']),
             $this->app['request'],
             $auth->createUserProvider()
         );

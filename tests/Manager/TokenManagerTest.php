@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This file is part of the Sanctum ORM project.
+ *
+ * (c) Anthonius Munthi <https://itstoni.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
 namespace Tests\Kilip\DoctrineSanctum\Manager;
 
 use Doctrine\Persistence\ObjectManager;
@@ -25,15 +36,14 @@ class TokenManagerTest extends TestCase
      */
     private $omUser;
 
-
     private $tokenManager;
 
-    protected function setUp():void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->omToken = $this->createMock(ObjectManager::class);
-        $this->omUser = $this->createMock(ObjectManager::class);
+        $this->omUser  = $this->createMock(ObjectManager::class);
 
         $this->tokenManager = new TokenManager(
             $this->omToken,
@@ -47,7 +57,7 @@ class TokenManagerTest extends TestCase
     {
         $omToken = $this->omToken;
         $manager = $this->tokenManager;
-        $user = $this->createMock(SanctumUserInterface::class);
+        $user    = $this->createMock(SanctumUserInterface::class);
 
         $omToken->expects($this->once())
             ->method('persist')
@@ -55,14 +65,15 @@ class TokenManagerTest extends TestCase
         $omToken->expects($this->once())
             ->method('flush');
 
-        $this->assertInstanceOf(NewAccessToken::class, $manager->createToken($user,'test'));
+        $this->assertInstanceOf(NewAccessToken::class, $manager->createToken($user, 'test'));
     }
+
     public function testFindToken()
     {
-        $omToken = $this->omToken;
+        $omToken    = $this->omToken;
         $repository = $this->createMock(ObjectRepository::class);
-        $token = $this->createMock(TokenModelInterface::class);
-        $manager = $this->tokenManager;
+        $token      = $this->createMock(TokenModelInterface::class);
+        $manager    = $this->tokenManager;
 
         $omToken->expects($this->once())
             ->method('getRepository')
@@ -80,7 +91,7 @@ class TokenManagerTest extends TestCase
     public function testCreateTransientToken()
     {
         $manager = $this->tokenManager;
-        $user = $this->createMock(SanctumUserInterface::class);
+        $user    = $this->createMock(SanctumUserInterface::class);
 
         $user->expects($this->once())
             ->method('withAccessToken')
@@ -92,10 +103,10 @@ class TokenManagerTest extends TestCase
     public function testUpdateAccessToken()
     {
         $omToken = $this->omToken;
-        $omUser = $this->omUser;
+        $omUser  = $this->omUser;
         $manager = $this->tokenManager;
-        $user = $this->createMock(SanctumUserInterface::class);
-        $token = $this->createMock(TokenModelInterface::class);
+        $user    = $this->createMock(SanctumUserInterface::class);
+        $token   = $this->createMock(TokenModelInterface::class);
 
         $token->method('getOwner')
             ->willReturn($user);
