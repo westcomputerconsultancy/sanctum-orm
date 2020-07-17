@@ -122,11 +122,11 @@ class GuardTest extends TestCase
 
     public function testInvokeWithInvalidRequest()
     {
-        $guard = $this->guard;
-        $request = $this->createMock(Request::class);
-        $authFactory = $this->authFactory;
+        $guard          = $this->guard;
+        $request        = $this->createMock(Request::class);
+        $authFactory    = $this->authFactory;
         $statefullGuard = $this->createMock(StatefulGuard::class);
-        
+
         $authFactory->expects($this->once())
             ->method('guard')
             ->with('web')
