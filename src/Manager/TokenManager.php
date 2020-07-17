@@ -93,7 +93,6 @@ class TokenManager implements TokenManagerInterface
             ->setAbilities($abilities);
 
         $this->storeToken($token);
-        $this->storeUser($user);
 
         return new NewAccessToken($token, $token->getId().'|'.$plainTextToken);
     }
@@ -138,9 +137,7 @@ class TokenManager implements TokenManagerInterface
     {
         $token->setLastUsedAt(now());
         $token->getOwner()->withAccessToken($token);
-
         $this->storeToken($token);
-        $this->storeUser($token->getOwner());
 
         return $token->getOwner();
     }

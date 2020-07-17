@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Kilip\SanctumORM;
 
-use Doctrine\ORM\Events;
 use Illuminate\Auth\RequestGuard;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -21,13 +20,15 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
-use Kilip\SanctumORM\Listeners\TargetEntityResolver;
+use Kilip\SanctumORM\Contracts\SanctumUserInterface;
+use Kilip\SanctumORM\Contracts\TokenModelInterface;
 use Kilip\SanctumORM\Manager\TokenManager;
 use Kilip\SanctumORM\Manager\TokenManagerInterface;
 use Kilip\SanctumORM\Security\Guard;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use LaravelDoctrine\Extensions\Timestamps\TimestampableExtension;
 use LaravelDoctrine\ORM\IlluminateRegistry;
+use Omed\Laravel\ORM\Resolvers\TargetEntityResolver;
 
 class SanctumORMServiceProvider extends ServiceProvider
 {
@@ -40,12 +41,23 @@ class SanctumORMServiceProvider extends ServiceProvider
         $this->configureManager();
         $this->configureGuard();
         $this->configureMiddleware();
+        $this->configureTargetEntity();
     }
 
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/sanctum_orm.php', 'sanctum_orm');
         $this->configureDoctrine();
+    }
+
+    private function configureTargetEntity()
+    {
+        /* @var TargetEntityResolver $resolver*/
+        $resolver = $this->app->get(TargetEntityResolver::class);
+        $tokenModel = config('sanctum_orm.doctrine.models.token');
+        $userModel = config('sanctum_orm.doctrine.models.user');
+        $resolver->addResolveTargetEntity(TokenModelInterface::class, $tokenModel,[]);
+        $resolver->addResolveTargetEntity(SanctumUserInterface::class, $userModel,[]);
     }
 
     private function configureDoctrine()
@@ -62,11 +74,6 @@ class SanctumORMServiceProvider extends ServiceProvider
                     'namespace'     => false,
                     'path'          => storage_path('proxies'),
                     'auto_generate' => false,
-                ],
-                'events' => [
-                    'listeners' => [
-                        Events::loadClassMetadata => TargetEntityResolver::class,
-                    ],
                 ],
             ],
             'doctrine.extensions' => array_merge([

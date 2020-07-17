@@ -136,7 +136,6 @@ class TokenManagerTest extends TestCase
     public function testUpdateAccessToken()
     {
         $omToken = $this->omToken;
-        $omUser  = $this->omUser;
         $manager = $this->tokenManager;
         $user    = $this->createMock(SanctumUserInterface::class);
         $token   = $this->createMock(TokenModelInterface::class);
@@ -154,10 +153,6 @@ class TokenManagerTest extends TestCase
         $omToken->expects($this->once())
             ->method('persist')
             ->with($token);
-        $omUser->expects($this->once())
-            ->method('persist')
-            ->with($user);
-
         $this->assertSame($user, $manager->updateAccessToken($token));
     }
 

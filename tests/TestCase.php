@@ -13,15 +13,14 @@ declare(strict_types=1);
 
 namespace Tests\Kilip\SanctumORM;
 
-use Doctrine\ORM\Events;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Illuminate\Support\Facades\Hash;
-use Kilip\SanctumORM\Listeners\TargetEntityResolver;
 use Kilip\SanctumORM\SanctumORMServiceProvider;
 use Laravel\Sanctum\SanctumServiceProvider;
 use LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider;
 use LaravelDoctrine\ORM\DoctrineServiceProvider;
+use Omed\Laravel\ORM\ORMServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Tests\Kilip\SanctumORM\Fixtures\Model\TestTokens;
 use Tests\Kilip\SanctumORM\Fixtures\Model\TestUser;
@@ -41,6 +40,7 @@ class TestCase extends OrchestraTestCase
         return [
             DoctrineServiceProvider::class,
             GedmoExtensionsServiceProvider::class,
+            ORMServiceProvider::class,
             SanctumServiceProvider::class,
             SanctumORMServiceProvider::class,
         ];
@@ -53,9 +53,6 @@ class TestCase extends OrchestraTestCase
 
         $config->set('doctrine.managers.default.paths', [
             __DIR__.'/Fixtures/Model',
-        ]);
-        $config->set('doctrine.managers.default.events.listeners', [
-            Events::loadClassMetadata => TargetEntityResolver::class,
         ]);
 
         $config->set('auth.providers.users.driver', 'doctrine');
