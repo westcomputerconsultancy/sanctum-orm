@@ -52,12 +52,12 @@ class SanctumORMServiceProvider extends ServiceProvider
 
     private function configureTargetEntity()
     {
-        /* @var TargetEntityResolver $resolver*/
-        $resolver = $this->app->get(TargetEntityResolver::class);
+        /** @var TargetEntityResolver $resolver */
+        $resolver   = $this->app->get(TargetEntityResolver::class);
         $tokenModel = config('sanctum_orm.doctrine.models.token');
-        $userModel = config('sanctum_orm.doctrine.models.user');
-        $resolver->addResolveTargetEntity(TokenModelInterface::class, $tokenModel,[]);
-        $resolver->addResolveTargetEntity(SanctumUserInterface::class, $userModel,[]);
+        $userModel  = config('sanctum_orm.doctrine.models.user');
+        $resolver->addResolveTargetEntity(TokenModelInterface::class, $tokenModel, []);
+        $resolver->addResolveTargetEntity(SanctumUserInterface::class, $userModel, []);
     }
 
     private function configureDoctrine()
