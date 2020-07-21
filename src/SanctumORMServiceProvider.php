@@ -51,26 +51,26 @@ class SanctumORMServiceProvider extends ServiceProvider
 
     private function configureTargetEntity()
     {
-        $tokenModel = config('sanctum.orm.models.token');
-        $userModel  = config('sanctum.orm.models.user');
+        $tokenModel  = config('sanctum.orm.models.token');
+        $userModel   = config('sanctum.orm.models.user');
         $managerName = config('sanctum.orm.manager_name');
 
         config([
-            'doctrine.mappings' => [],
+            'doctrine.mappings'                => [],
             'doctrine.resolve_target_entities' => array_merge(
                 [
-                    TokenModelInterface::class => $tokenModel,
-                    SanctumUserInterface::class => $userModel
+                    TokenModelInterface::class  => $tokenModel,
+                    SanctumUserInterface::class => $userModel,
                 ],
-                config('doctrine.resolve_target_entities',[])
+                config('doctrine.resolve_target_entities', [])
             ),
         ]);
 
         $configName = 'doctrine.managers.'.$managerName.'.paths';
-        $paths = config($configName,[]);
-        $paths[] = __DIR__.'/Model';
+        $paths      = config($configName, []);
+        $paths[]    = __DIR__.'/Model';
         config([
-            $configName => $paths
+            $configName => $paths,
         ]);
     }
 

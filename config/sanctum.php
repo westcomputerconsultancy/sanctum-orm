@@ -14,12 +14,12 @@ declare(strict_types=1);
 return [
     'orm' => [
         'manager_name' => 'default',
-        'models' => [
+        'models'       => [
             'token' => null,
             'user'  => config('auth.providers.users.model'),
         ],
         'services' => [
             'token' => 'sanctum.orm.token_manager',
-        ]
+        ],
     ],
 ];

@@ -22,7 +22,6 @@ use Kilip\SanctumORM\SanctumORMServiceProvider;
 use Laravel\Sanctum\SanctumServiceProvider;
 use LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider;
 use LaravelDoctrine\ORM\DoctrineServiceProvider;
-use Omed\Laravel\ORM\ORMServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Tests\Kilip\SanctumORM\Fixtures\Model\TestTokens;
 use Tests\Kilip\SanctumORM\Fixtures\Model\TestUser;
