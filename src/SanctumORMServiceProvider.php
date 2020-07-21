@@ -28,14 +28,13 @@ use Kilip\SanctumORM\Security\Guard;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use LaravelDoctrine\Extensions\Timestamps\TimestampableExtension;
 use LaravelDoctrine\ORM\IlluminateRegistry;
-use Omed\Laravel\ORM\Resolvers\TargetEntityResolver;
 
 class SanctumORMServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config/sanctum_orm.php' => config_path('sanctum_orm.php'),
+            __DIR__.'/../config/sanctum.php' => config_path('sanctum.php'),
         ]);
 
         $this->configureManager();
@@ -46,36 +45,38 @@ class SanctumORMServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/sanctum_orm.php', 'sanctum_orm');
+        $this->mergeConfigFrom(__DIR__.'/../config/sanctum.php', 'sanctum');
         $this->configureDoctrine();
     }
 
     private function configureTargetEntity()
     {
-        /** @var TargetEntityResolver $resolver */
-        $resolver   = $this->app->get(TargetEntityResolver::class);
-        $tokenModel = config('sanctum_orm.doctrine.models.token');
-        $userModel  = config('sanctum_orm.doctrine.models.user');
-        $resolver->addResolveTargetEntity(TokenModelInterface::class, $tokenModel, []);
-        $resolver->addResolveTargetEntity(SanctumUserInterface::class, $userModel, []);
+        $tokenModel  = config('sanctum.orm.models.token');
+        $userModel   = config('sanctum.orm.models.user');
+        $managerName = config('sanctum.orm.manager_name');
+
+        config([
+            'doctrine.mappings'                => [],
+            'doctrine.resolve_target_entities' => array_merge(
+                [
+                    TokenModelInterface::class  => $tokenModel,
+                    SanctumUserInterface::class => $userModel,
+                ],
+                config('doctrine.resolve_target_entities', [])
+            ),
+        ]);
+
+        $configName = 'doctrine.managers.'.$managerName.'.paths';
+        $paths      = config($configName, []);
+        $paths[]    = __DIR__.'/Model';
+        config([
+            $configName => $paths,
+        ]);
     }
 
     private function configureDoctrine()
     {
         config([
-            'doctrine.managers.sanctum_orm' => [
-                'connection' => config('sanctum_orm.doctrine.connection'),
-                'dev'        => config('app.debug', false),
-                'type'       => 'annotations',
-                'paths'      => [
-                    __DIR__.'/Model',
-                ],
-                'proxies' => [
-                    'namespace'     => false,
-                    'path'          => storage_path('proxies'),
-                    'auto_generate' => false,
-                ],
-            ],
             'doctrine.extensions' => array_merge([
                 TimestampableExtension::class,
             ], config('doctrine.extensions')),
@@ -87,7 +88,7 @@ class SanctumORMServiceProvider extends ServiceProvider
         $this->app->singleton(TokenManagerInterface::class, function (Application $app) {
             return $this->createTokenManager();
         });
-        $this->app->alias(TokenManagerInterface::class, 'sanctum_orm.managers.token');
+        $this->app->alias(TokenManagerInterface::class, 'sanctum.orm.services.token');
     }
 
     public function provides()
@@ -148,18 +149,18 @@ class SanctumORMServiceProvider extends ServiceProvider
     {
         /** @var IlluminateRegistry $registry */
         $registry   = $this->app->get('registry');
-        $tokenModel = (string) config('sanctum_orm.doctrine.models.token');
-        $userModel  = (string) config('sanctum_orm.doctrine.models.user');
+        $tokenModel = (string) config('sanctum.orm.models.token');
+        $userModel  = (string) config('sanctum.orm.models.user');
 
         if (empty($tokenModel)) {
-            throw new \InvalidArgumentException('You have to configure "sanctum_orm.doctrine.models.token"');
+            throw new \InvalidArgumentException('You have to configure "sanctum.orm.models.token"');
         }
         if (!class_exists($tokenModel)) {
             throw new \InvalidArgumentException(sprintf('Can not use doctrine orm model "%s", class not exists.', $tokenModel));
         }
 
         if (empty($userModel)) {
-            throw new \InvalidArgumentException('You have to configure "sanctum_orm.doctrine.models.user"');
+            throw new \InvalidArgumentException('You have to configure "sanctum.orm.models.user"');
         }
         if (!class_exists($userModel)) {
             throw new \InvalidArgumentException(sprintf('Can not use doctrine orm model "%s", class not exist.', $userModel));
