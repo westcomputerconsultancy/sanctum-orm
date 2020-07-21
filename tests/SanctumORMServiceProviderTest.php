@@ -62,10 +62,10 @@ class SanctumORMServiceProviderTest extends TestCase
     public function getTokenManagerConfigErrorData()
     {
         return [
-            ['sanctum_orm.doctrine.models.user', '', '/^You have to configure/'],
-            ['sanctum_orm.doctrine.models.token', '', '/^You have to configure/'],
-            ['sanctum_orm.doctrine.models.user', 'Foo\\Class', '/^Can not use doctrine orm model/'],
-            ['sanctum_orm.doctrine.models.token', 'Foo\\Class', '/^Can not use doctrine orm model/'],
+            ['sanctum.orm.models.user', '', '/^You have to configure/'],
+            ['sanctum.orm.models.token', '', '/^You have to configure/'],
+            ['sanctum.orm.models.user', 'Foo\\Class', '/^Can not use doctrine orm model/'],
+            ['sanctum.orm.models.token', 'Foo\\Class', '/^Can not use doctrine orm model/'],
         ];
     }
 

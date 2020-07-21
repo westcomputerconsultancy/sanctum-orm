@@ -49,12 +49,11 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
-        "doctrine/orm": "^2.7",
+        "doctrine/orm": "^2.7.3",
         "gedmo/doctrine-extensions": "^2.4",
+        "kilip/laravel-doctrine-orm": "^1.0@dev",
         "laravel-doctrine/extensions": "^1.2",
-        "laravel-doctrine/orm": "^1.6",
-        "laravel/sanctum": "^2.4",
-        "omed/laravel-orm": "^1.0@dev"
+        "laravel/sanctum": "^2.4"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",

@@ -16,6 +16,8 @@ namespace Tests\Kilip\SanctumORM;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Illuminate\Support\Facades\Hash;
+use Kilip\LaravelDoctrine\ORM\KilipDoctrineServiceProvider;
+use Kilip\LaravelDoctrine\ORM\Testing\ORMTestTrait;
 use Kilip\SanctumORM\SanctumORMServiceProvider;
 use Laravel\Sanctum\SanctumServiceProvider;
 use LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider;
@@ -27,12 +29,14 @@ use Tests\Kilip\SanctumORM\Fixtures\Model\TestUser;
 
 class TestCase extends OrchestraTestCase
 {
+    use ORMTestTrait;
+
     protected function setUp(): void
     {
         parent::setUp();
         include __DIR__.'/Fixtures/routes.php';
 
-        $this->artisan('doctrine:schema:create');
+        $this->recreateDatabase();
     }
 
     protected function getPackageProviders($app)
@@ -40,7 +44,7 @@ class TestCase extends OrchestraTestCase
         return [
             DoctrineServiceProvider::class,
             GedmoExtensionsServiceProvider::class,
-            ORMServiceProvider::class,
+            KilipDoctrineServiceProvider::class,
             SanctumServiceProvider::class,
             SanctumORMServiceProvider::class,
         ];
@@ -57,8 +61,8 @@ class TestCase extends OrchestraTestCase
 
         $config->set('auth.providers.users.driver', 'doctrine');
         $config->set('auth.providers.users.model', TestUser::class);
-        $config->set('sanctum_orm.doctrine.models.token', TestTokens::class);
-        $config->set('sanctum_orm.doctrine.models.user', TestUser::class);
+        $config->set('sanctum.orm.models.token', TestTokens::class);
+        $config->set('sanctum.orm.models.user', TestUser::class);
         $config->set('sanctum.expiration', 3600);
     }
 

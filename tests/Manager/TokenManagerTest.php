@@ -44,7 +44,7 @@ class TokenManagerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
+        $config = config();
         $this->omToken = $this->createMock(ObjectManager::class);
         $this->omUser  = $this->createMock(ObjectManager::class);
 
