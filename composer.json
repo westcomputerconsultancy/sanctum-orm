@@ -1,5 +1,5 @@
 {
-    "name": "kilip/sanctum-orm",
+    "name": "westcomputerconsultancy/sanctum-orm",
     "description": "Doctrine integration for Laravel Sanctum",
     "type": "library",
     "license": "MIT",
